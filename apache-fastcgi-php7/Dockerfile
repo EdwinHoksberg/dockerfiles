@@ -16,7 +16,7 @@ deb-src http://packages.dotdeb.org jessie all'\ > /etc/apt/sources.list
 # Update installation + apache and install dependencies
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E9C74FEEA2098A6E \
     && apt-get update \
-    && apt-get install -y apache2 libapache2-mod-fastcgi supervisor php7.0 php7.0-dev php7.0-mysql php7.0-bcmath php7.0-bz2 php7.0-dba php7.0-gd php7.0-intl php7.0-mcrypt php7.0-pspell php7.0-soap php7.0-sqlite3 php7.0-zip php7.0-xml php7.0-xdebug php7.0-fpm \
+    && apt-get install -y apache2 libapache2-mod-fastcgi supervisor php7.0 php7.0-dev php7.0-mysql php7.0-bcmath php7.0-bz2 php7.0-dba php7.0-gd php7.0-intl php7.0-mcrypt php7.0-pspell php7.0-soap php7.0-sqlite3 php7.0-zip php7.0-xml php7.0-xdebug php7.0-fpm php7.0-curl php7.0-mbstring \
     && rm -rf /var/lib/apt/lists/* \
 ;
 
@@ -37,7 +37,7 @@ RUN echo '<IfModule mod_fastcgi.c>\n\
 '\ > /etc/apache2/conf-available/php7-fpm.conf
 
 # Copy vhost and enable apache modules
-COPY ./vhosts/* /etc/apache2/sites-enabled/
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod actions rewrite \
     && a2enconf php7-fpm \
 ;
