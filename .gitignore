@@ -1,2 +1,0 @@
-apache-fastcgi-php7/vhosts/*
-!apache-fastcgi-php7/hosts/example.dev.conf
