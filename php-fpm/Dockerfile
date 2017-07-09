@@ -3,20 +3,29 @@ MAINTAINER Edwin Hoksberg <mail@edwinhoksberg.nl>
 
 RUN export DEBIAN_FRONTEND=noninteractive
 
+# Install new php package repository and package signing key
+RUN echo "deb https://packages.sury.org/php jessie main" > /etc/apt/sources.list.d/php.list
+RUN wget -qO - "https://packages.sury.org/php/apt.gpg" | apt-key add -
+
+# Update apt repositories
+RUN apt-get update
+
 # Install php + extensions
-RUN apt-get-safeinstall php7.0-fpm php7.0-mysql php7.0-pdo \
-    php7.0-curl php7.0-gd php7.0-imagick php7.0-mbstring \
-    php7.0-mcrypt php7.0-memcached php7.0-pspell php7.0-recode \
-    php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-xdebug php7.0-imap
+ADD install-php.sh install-php.sh
+RUN chmod +x install-php.sh && ./install-php.sh && rm install-php.sh
 
 # Clean apt caches
 RUN apt-get-clean
 
+# Copy config files over
+COPY rootfs /
+
 # Create php-fpm pid directory
 RUN mkdir -p /run/php
 
-# Overwrite the default fpm pool with ours
-COPY pool.conf /etc/php/7.0/fpm/pool.d/www.conf
+# Copy startup script
+COPY start-services.sh start-services.sh
+RUN chmod +x start-services.sh
 
-# Force run php-fpm in foreground
-CMD [ "/usr/sbin/php-fpm7.0", "-F", "-O" ]
+# Start php-fpm and tail logs
+CMD [ "./start-services.sh" ]
