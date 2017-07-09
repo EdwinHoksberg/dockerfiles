@@ -4,8 +4,8 @@ MAINTAINER Edwin Hoksberg <mail@edwinhoksberg.nl>
 # Install nginx
 RUN apt-get-safeinstall nginx
 
-# Copy nginx sites config
-COPY sites.conf /etc/nginx/sites-enabled/
+# Copy nginx config
+COPY rootfs /
 
 # Clean apt caches
 RUN apt-get-clean

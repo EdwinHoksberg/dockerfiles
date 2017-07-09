@@ -1,16 +1,13 @@
 server {
     # Ports and ips to listen on
-    listen 80 deferred;
-    listen [::]:80 deferred;
+    listen 80;
+    listen [::]:80;
 
     # The host name to respond to
     server_name local.dev;
 
     # Path for static files
-    root /var/www/html;
-
-    # Index files
-    index index.php index.html;
+    root /var/www/html/;
 
     # Redirect access/error logs to stdout
     access_log /dev/stdout;
