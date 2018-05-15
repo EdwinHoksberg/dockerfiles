@@ -1,26 +1,18 @@
-FROM debian:jessie-slim
-MAINTAINER Edwin Hoksberg <mail@edwinhoksberg.nl>
+FROM debian:stretch-slim
+LABEL maintainer="mail@edwinhoksberg.nl"
 
-RUN export DEBIAN_FRONTEND=noninteractive
-RUN export TERM=xterm
+ENV TERM=xterm DEBIAN_FRONTEND=noninteractive
 
 # Copy scripts to image
 COPY rootfs /
 
 # Make apt/dpkg faster: https://unix.stackexchange.com/a/7242
-RUN echo force-unsafe-io >> /etc/dpkg/dpkg.cfg
+RUN echo force-unsafe-io >> /etc/dpkg/dpkg.cfg && \
+    # Silence apt warnings: https://github.com/phusion/baseimage-docker/issues/58#issuecomment-47995343
+    echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
-# Update apt repositories
-RUN apt-get update
-
-# Install additional packages
-RUN apt-get-safeinstall software-properties-common \
-    apt-transport-https wget gnupg2 dirmngr
-
-# Upgrade all packages
-RUN apt-get upgrade -y
-
-# Setup language
-RUN export LANG=en_US.UTF-8
-RUN export LC_ALL=en_US.UTF-8
-RUN apt-get-safeinstall locales && locale-gen en_US.UTF-8
+# Update/upgrade debian and install additional packages
+RUN apt-get update && \
+    apt-get-safeinstall software-properties-common apt-transport-https wget gnupg2 dirmngr && \
+    apt-get upgrade -y && \
+    apt-get-clean
