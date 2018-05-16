@@ -13,6 +13,6 @@ RUN echo force-unsafe-io >> /etc/dpkg/dpkg.cfg && \
 
 # Update/upgrade debian and install additional packages
 RUN apt-get update && \
-    apt-get-safeinstall software-properties-common apt-transport-https wget gnupg2 dirmngr && \
+    apt-get-safeinstall apt-utils software-properties-common apt-transport-https wget gnupg2 dirmngr && \
     apt-get upgrade -y && \
     apt-get-clean
