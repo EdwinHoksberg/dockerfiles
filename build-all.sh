@@ -1,14 +1,18 @@
 #!/bin/sh
 
-# Show all commands being executed and stop executing if an error occurs.
-set -ex
+set -e
 
-docker build --pull -t edwinhoksberg/base base
+current_dir=$(pwd)
+namespace=edwinhoksberg
 
-docker build -t edwinhoksberg/data-volume data-volume
+# loop through each directory in current dir
+for d in */; do
+    cd "$d"
 
-docker build -t edwinhoksberg/nginx nginx
+    # Get basename of directory and build docker image
+    name=$(basename "$d")
+    docker build -t "$namespace"/"$name" .
 
-docker build -t edwinhoksberg/php-fpm php-fpm
-
-echo "All done!"
+    # return to the base directory
+    cd "$current_dir"
+done
