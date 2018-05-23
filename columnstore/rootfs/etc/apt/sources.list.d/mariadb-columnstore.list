@@ -1,5 +1,5 @@
 deb https://downloads.mariadb.com/MariaDB/mariadb-columnstore/1.1.4/repo/debian9 stretch main
 deb https://downloads.mariadb.com/MariaDB/mariadb-columnstore-api/1.1.4/repo/debian9 stretch main
 deb https://downloads.mariadb.com/MariaDB/mariadb-columnstore-tools/1.1.4/repo/debian9 stretch main
-#deb https://downloads.mariadb.com/MaxScale/latest/debian stretch main
+deb https://downloads.mariadb.com/MaxScale/latest/debian stretch main
 #deb https://downloads.mariadb.com/MariaDB/data-adapters/mariadb-streaming-data-adapters/latest/repo/debian9 stretch main
