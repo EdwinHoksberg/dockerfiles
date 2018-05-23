@@ -1,0 +1,16 @@
+# vim: tabstop=2 shiftwidth=2 softtabstop=2
+
+version: '3'
+
+services:
+  columnstore:
+    image: edwinhoksberg/columnstore:latest
+    ports:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+    volumes:
+      - /usr/local/mariadb/columnstore/etc
+      - /usr/local/mariadb/columnstore/data1
+      - /usr/local/mariadb/columnstore/local
+      - /usr/local/mariadb/columnstore/mysql/db
