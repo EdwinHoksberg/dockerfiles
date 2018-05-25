@@ -30,4 +30,7 @@ VOLUME /usr/local/mariadb/columnstore/data1
 VOLUME /usr/local/mariadb/columnstore/local
 VOLUME /usr/local/mariadb/columnstore/mysql/db
 
+HEALTHCHECK --interval=1m --timeout=10s --retries=3 \
+    CMD /healthcheck.sh
+
 CMD ["/run.sh"]
